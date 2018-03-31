@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="getAll" class="myCommunity.web.action.ForumAction" 
+        	method="getAll">
+        	<result name="index">/WEB-INF/jsp/bbs-index.jsp</result>
+        </action>
+        
+        <action name="checklogin" class="myCommunity.web.action.UserAction" 
+        	method="checklogin">
+        	<result name="success" type="redirect">getAll</result>
+        	<result name="login">/WEB-INF/jsp/login.jsp</result>
+        </action>
+        
+        <action name="registerUser" class="myCommunity.web.action.UserAction" 
+        	method="registerUser">
+        	<result name="success" type="redirect">/login</result>
+        </action>
+        
+        <action name="login" class="myCommunity.web.action.UserAction" 
+        	method="login">
+        	<result name="login">/WEB-INF/jsp/login.jsp</result>
+        </action>
+        
+        <action name="userout" class="myCommunity.web.action.UserAction" 
+        	method="outs">
+        	<result name="login" type="redirect">/login</result>
+        </action>
+        
+        <action name="register" class="myCommunity.web.action.UserAction" 
+        	method="register">
+        	<result name="register">/WEB-INF/jsp/register.jsp</result>
+        </action>
+        
+        <action name="findTopicByTitle" class="myCommunity.web.action.TopicAction" 
+        	method="findTopicByTitle">
+        	<result name="findTopic">/WEB-INF/jsp/findTopic.jsp</result>
+        </action>
+        
+        <action name="fectAll" class="myCommunity.web.action.CommentAction" 
+        	method="fectAll">
+        	<result name="success">/WEB-INF/jsp/comment.jsp</result>
+        </action>
+        
+        <action name="published" class="myCommunity.web.action.CommentAction" 
+        	method="published">
+        	<result name="success" type="redirect">/fectAll?referenceId=${rid}</result>
+        </action>
+    </package>
+    
+    
+    
+    <package name="admin" namespace="/admin" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="security" class="myCommunity.web.interceptor.SecurityInterceptor" />
+    		<interceptor-stack name="adminStack">
+    			<interceptor-ref name="security" />
+    			<interceptor-ref name="defaultStack" />
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="adminStack" />
+    	
+    	<global-results>
+    		<result name="login" type="redirect">/login</result>
+    	</global-results>
+    
+    	 <action name="updateuser" class="myCommunity.web.action.UserAction" 
+        	method="updateuser">
+        	<result name="updateuser">/WEB-INF/jsp/admin/update-user.jsp</result>
+        </action>
+        <action name="updateEmail" class="myCommunity.web.action.UserAction" 
+        	method="updateEmail">
+        	<result name="updateEmail">/WEB-INF/jsp/admin/email.jsp</result>
+        </action>
+        <action name="updateU" class="myCommunity.web.action.UserAction" 
+        	method="updateU">
+        	<result name="login" type="redirect">/login</result>
+        </action>
+        
+    </package>
+    
+</struts>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
